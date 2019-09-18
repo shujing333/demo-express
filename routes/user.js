@@ -9,7 +9,7 @@ router.get('/create',(req,res)=>{
 });
 
 //注册操作路由
-router.post('/store',(req,res)=>{
+router.post('/store', async(req,res)=>{
     //1.获取form表单,前端传递过来的参数
     //console.log(req.body);
     let username=req.body.username;
@@ -29,25 +29,36 @@ router.post('/store',(req,res)=>{
     // });
 
     //数据库的操作都是异步操作
-    UserModel.findOne({email:req.body.email})
-       .then(data=>{
-          if(data){
-              //邮箱已经被注册过了
-              res.send('该邮箱已被注册过');
-          } else {
-            let user=new UserModel(req.body);
-            user
-                .save()
-                .then(()=>{
-                    //成功
-                    res.send('注册成功');
-                }).catch(error=>{
-                    //失败
-                    res.send('注册失败');
-                });
+    let data=await UserModel.findOne({email:req.body.email})
+    //console.log(data);
+    if(data){
+        //邮箱已经被注册
+        res.send('该邮箱已经被注册过');
+    }else{
+        let user=new UserModel(req.body);
+        await user.save();
+        res.send('注册成功');
+    }
+    
+    
+    //    .then(data=>{
+    //       if(data){
+    //           //邮箱已经被注册过了
+    //           res.send('该邮箱已被注册过');
+    //       } else {
+    //         let user=new UserModel(req.body);
+    //         user
+    //             .save()
+    //             .then(()=>{
+    //                 //成功
+    //                 res.send('注册成功');
+    //             }).catch(error=>{
+    //                 //失败
+    //                 res.send('注册失败');
+    //             });
 
-          }
-       });
+           //};
+       //});
 
     //4.send
     // res.send('注册成功');
