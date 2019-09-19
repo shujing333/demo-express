@@ -1,6 +1,7 @@
 const express=require('express');
 const cookieParser=require('cookie-parser');
 const userRouter=require('./routes/user');
+const postRouter=require('./routes/post');
 const app=express();
 //模板引擎
 app.set('views','views');
@@ -16,5 +17,6 @@ app.use(cookieParser());
 
 //处理各种路由中间件
 app.use('/users',userRouter);
+app.use('/posts',postRouter);
 
 app.listen(3000);

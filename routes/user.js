@@ -1,5 +1,6 @@
 const express=require('express');
 const UserModel=require('../models/user');
+const bcryptjs=require('bcryptjs');
 const router=express.Router();
 
 //注册页面路由
@@ -35,7 +36,11 @@ router.post('/store', async(req,res)=>{
         //邮箱已经被注册
         res.send('该邮箱已经被注册过');
     }else{
-        let user=new UserModel(req.body);
+        let user=new UserModel({
+            username:req.body.username,
+            email:req.body.email,
+            password:bcryptjs.hashSync(req.body.password)
+        });
         await user.save();
         res.send('注册成功');
     }
