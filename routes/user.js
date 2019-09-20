@@ -104,4 +104,12 @@ router.post("/login", async (req, res) => {
   req.session.user = user;
   res.redirect(redirect);
 });
+
+//退出登录
+router.post("/logout", (req, res) => {
+  //sessin清除
+  req.session.destroy();
+  //返回到登录页面
+  res.redirect("/users/login");
+});
 module.exports = router;

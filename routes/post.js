@@ -22,13 +22,16 @@ router.get("/", auth(), async (req, res) => {
   res.render("posts/index", {
     list,
     total,
-    pageNum
+    pageNum,
+    user: req.session.user
   });
 });
 
 //文章新增页面
 router.get("/create", auth(), (req, res) => {
-  res.render("posts/create");
+  res.render("posts/create", {
+    user: req.session.user
+  });
 });
 
 //文章详情
@@ -39,7 +42,8 @@ router.get("/:id", auth(), async (req, res) => {
   let data = await PostModel.findById(id);
   //3.渲染页面
   res.render("posts/show", {
-    postInfo: data
+    postInfo: data,
+    user: req.session.user
   });
 });
 
@@ -66,7 +70,8 @@ router.get("/:id/edit", auth(), async (req, res) => {
   res.render("posts/edit", {
     id: post._id,
     title: post.title,
-    content: post.content
+    content: post.content,
+    user: req.session.user
   });
 });
 
