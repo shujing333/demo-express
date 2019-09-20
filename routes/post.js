@@ -1,4 +1,5 @@
 const express = require("express");
+const moment = require("moment");
 const auth = require("../middlewares/auth");
 const PostModel = require("../models/post");
 const router = express.Router();
@@ -19,6 +20,22 @@ router.get("/", auth(), async (req, res) => {
     .skip((pageNum - 1) * pageSize)
     .limit(pageSize);
   //console.log(list);
+
+  //list是数据库查询出来的类数组的东西
+  list = JSON.parse(JSON.stringify(list));
+  //对list里面的每一项的updateAt做一下格式化
+  list.forEach(item => {
+    let abc = new Date(item.updatedAt);
+    // let year = abc.getFullYear();
+    // let month = abc.getMonth();
+    // let date = abc.getDate();
+
+    // let h = abc.getHours();
+    // let f = abc.getMinutes();
+    // let s = abc.getSeconds();
+    //item.updatedAt = `${year}-${month}-${date} ${h}:${f}:${s}`;
+    item.updatedAt = moment(abc).format("YYYY-MM-DD HH:mm:ss");
+  });
   res.render("posts/index", {
     list,
     total,

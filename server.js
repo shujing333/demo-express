@@ -3,6 +3,7 @@ const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const userRouter = require("./routes/user");
 const postRouter = require("./routes/post");
+const fileRouter = require("./routes/file");
 const app = express();
 //模板引擎
 app.set("views", "views");
@@ -31,5 +32,6 @@ app.use(cookieParser());
 //处理各种路由中间件
 app.use("/users", userRouter);
 app.use("/posts", postRouter);
+app.use("/files", fileRouter);
 
 app.listen(3000);
