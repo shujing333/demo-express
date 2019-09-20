@@ -1,15 +1,10 @@
 const express = require("express");
+const auth = require("../middlewares/auth");
 const PostModel = require("../models/post");
 const router = express.Router();
 
 //文章列表
-router.get("/", async (req, res) => {
-  if (!req.session.user) {
-    //没有登录
-    res.send("没有登录");
-    return;
-  }
-
+router.get("/", auth(), async (req, res) => {
   //从url地址上获取当前要的是第几页,每页需要多少条
   let pageNum = parseInt(req.query.pageNum) || 1;
   let pageSize = parseInt(req.query.pageSize) || 5;
@@ -32,12 +27,12 @@ router.get("/", async (req, res) => {
 });
 
 //文章新增页面
-router.get("/create", (req, res) => {
+router.get("/create", auth(), (req, res) => {
   res.render("posts/create");
 });
 
 //文章详情
-router.get("/:id", async (req, res) => {
+router.get("/:id", auth(), async (req, res) => {
   //1.获取到文章的id
   let id = req.params.id;
   //2.根据这个id去数据库中查找那篇文章
@@ -48,8 +43,8 @@ router.get("/:id", async (req, res) => {
   });
 });
 
-//新增文章数据的校验
-router.post("/store", async (req, res) => {
+//新增文章
+router.post("/store", auth(), async (req, res) => {
   //1.数据的校验
   if (!req.body.title || !req.body.content) {
     res.send("参数有误");
@@ -64,7 +59,7 @@ router.post("/store", async (req, res) => {
 });
 
 //编辑文章页面
-router.get("/:id/edit", async (req, res) => {
+router.get("/:id/edit", auth(), async (req, res) => {
   //1.根据文章id获取信息
   let id = req.params.id;
   let post = await PostModel.findById(id);
@@ -76,7 +71,7 @@ router.get("/:id/edit", async (req, res) => {
 });
 
 //编辑文章操作
-router.post("/update", async (req, res) => {
+router.post("/update", auth(), async (req, res) => {
   //1.需要知道修改的文章id
   let id = req.body.id;
   let title = req.body.title;
@@ -90,7 +85,7 @@ router.post("/update", async (req, res) => {
 });
 
 //删除的接口,供前端ajax调用
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", auth(), async (req, res) => {
   //console.log(req);
   let id = req.params.id;
   //console.log(id);
