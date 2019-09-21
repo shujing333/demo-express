@@ -1,0 +1,61 @@
+<!-- 修改用户信息页面 -->
+
+<%-include('../layouts/header.ejs')%> <%-include('../layouts/nav.ejs')%>
+<div class="container my-5">
+  <div class="row">
+    <div class="col-md-3">
+      <nav class="nav nav-pills nav-justified mb-5 flex-md-column">
+        <a href="./profile.html" class="nav-item nav-link text-md-right active">
+          Profile
+        </a>
+        <a href="./password.html" class="nav-item nav-link text-md-right">
+          Security
+        </a>
+      </nav>
+    </div>
+    <div class="col-md-9">
+      <form
+        action="/settings/update"
+        method="POST"
+        enctype="multipart/form-data"
+      >
+        <h3 class="mb-4">Profile</h3>
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input
+            type="text"
+            class="form-control"
+            name="username"
+            value="<%= user.username%>"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            readonly
+            class="form-control"
+            name="email"
+            value="<%= user.email%>"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="avatar">头像</label>
+          <div class="avatar-box form-control">
+            <!-- <i class="fas fa-plus"></i> -->
+            <img src="<%= user.avatar%>" class="rounded" alt="" />
+            <input type="file" name="avatar" />
+          </div>
+        </div>
+
+        <button class="btn btn-primary btn-block my-4" type="submit">
+          Update profile
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<%-include('../layouts/footer.ejs')%>

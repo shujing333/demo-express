@@ -4,6 +4,7 @@ const session = require("express-session");
 const userRouter = require("./routes/user");
 const postRouter = require("./routes/post");
 const fileRouter = require("./routes/file");
+const settingRouter = require("./routes/setting");
 const app = express();
 //模板引擎
 app.set("views", "views");
@@ -33,5 +34,6 @@ app.use(cookieParser());
 app.use("/users", userRouter);
 app.use("/posts", postRouter);
 app.use("/files", fileRouter);
+app.use("/settings", settingRouter);
 
 app.listen(3000);

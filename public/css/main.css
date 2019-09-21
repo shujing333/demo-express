@@ -13,3 +13,25 @@
   width: 26px;
   height: 26px;
 }
+.avatar-box {
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
+  position: relative;
+  width: 200px;
+  height: 200px;
+  padding: 0;
+  border-style: dashed;
+}
+.avatar-box input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+.avatar-box img {
+  width: 100%;
+  height: 100%;
+}
