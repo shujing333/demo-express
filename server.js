@@ -5,6 +5,7 @@ const userRouter = require("./routes/user");
 const postRouter = require("./routes/post");
 const fileRouter = require("./routes/file");
 const settingRouter = require("./routes/setting");
+const passwordRouter = require("./routes/password");
 const app = express();
 //模板引擎
 app.set("views", "views");
@@ -35,5 +36,6 @@ app.use("/users", userRouter);
 app.use("/posts", postRouter);
 app.use("/files", fileRouter);
 app.use("/settings", settingRouter);
+app.use("/settings", passwordRouter);
 
 app.listen(3000);
